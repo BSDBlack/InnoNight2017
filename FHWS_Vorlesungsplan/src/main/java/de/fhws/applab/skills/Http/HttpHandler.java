@@ -7,6 +7,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import de.fhws.applab.skills.Json.JsonHandler;
+import de.fhws.applab.skills.dataStructure.Event;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,49 +17,37 @@ import java.util.List;
  */
 public class HttpHandler {
 
+  public HttpHandler(){
+    client = new OkHttpClient();
+  }
   public static void main(String[] args) {
     HttpHandler h = new HttpHandler();
     JsonHandler jh = new JsonHandler();
 
-    String s = h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day=27.06.2017");
+    String s = h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day=28.06.2017");
     jh.getEventArray(s);
-
-
+    List<Event> e = jh.getEventArray(s);
+    System.out.println(e.get(0).getLecturerView().get(0).getFirstName());
+    System.out.println(e.get(1).getStartTime());
   }
 
   OkHttpClient client;
 
-  public HttpHandler() {
-    client = new OkHttpClient();
-  }
-
   public String pullJsonStringFromHttp(String url) {
 
-    final List<String> objects = new ArrayList<String>();
     HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
 
     Request request = new Request.Builder()
         .url(url)
         .build();
 
-    client.newCall(request).enqueue(new Callback() {
-      @Override
-      public void onFailure(Request request, IOException e) {
-        e.printStackTrace();
-      }
 
-      @Override
-      public void onResponse(Response response) throws IOException {
-        if (!response.isSuccessful()) {
-          throw new IOException("Unexpected code " + response);
-        } else {
-          String e = response.body().string();
-          System.out.print(e);
-          objects.add(e);
-        }
-      }
-    });
-    return objects.get(0);
+    try {
+      String s = client.newCall(request).execute().body().string();
+      return s;
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
-
 }

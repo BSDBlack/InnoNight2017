@@ -1,41 +1,42 @@
 package de.fhws.applab.skills.dataStructure;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Florian Hohn on 23.06.2017.
  */
 public class Event {
-  protected String endTime;
-  protected String name;
-  protected String startTime;
-  protected String type;
+  private String endTime;
+  private String name;
+  private String startTime;
+  private String type;
 
-  protected ArrayList<LecturerView> lecturerViews;
-  protected ArrayList<RoomsView> roomsView;
-  protected ArrayList<StudentsView> studentsView;
+  private List<LecturerView> lecturerView;
+  private List<RoomsView> roomsView;
+  private List<StudentsView> studentsView;
 
-  public ArrayList<LecturerView> getLecturerViews() {
-    return lecturerViews;
+  public List<LecturerView> getLecturerView() {
+    return lecturerView;
   }
 
-  public void setLecturerViews(ArrayList<LecturerView> lecturerViews) {
-    this.lecturerViews = lecturerViews;
+  public void setLecturerView(List<LecturerView> lecturerView) {
+    this.lecturerView = lecturerView;
   }
 
-  public ArrayList<RoomsView> getRoomsView() {
+  public List<RoomsView> getRoomsView() {
     return roomsView;
   }
 
-  public void setRoomsView(ArrayList<RoomsView> roomsView) {
+  public void setRoomsView(List<RoomsView> roomsView) {
     this.roomsView = roomsView;
   }
 
-  public ArrayList<StudentsView> getStudentsView() {
+  public List<StudentsView> getStudentsView() {
     return studentsView;
   }
 
-  public void setStudentsView(ArrayList<StudentsView> studentsView) {
+  public void setStudentsView(List<StudentsView> studentsView) {
     this.studentsView = studentsView;
   }
 

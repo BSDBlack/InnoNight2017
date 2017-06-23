@@ -5,7 +5,7 @@ package de.fhws.applab.skills.dataStructure;
  */
 public class RoomsView
 {
-  protected String room;
+  private String room;
 
   public String getRoom() {
     return room;
@@ -14,7 +14,5 @@ public class RoomsView
   public void setRoom(String room) {
     this.room = room;
   }
-
-
 
 }

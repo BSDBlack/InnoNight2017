@@ -5,8 +5,8 @@ package de.fhws.applab.skills.dataStructure;
  */
 public class StudentsView
 {
-  protected String program;
-  protected int semester;
+  private String program;
+  private int semester;
 
   public String getProgram() {
     return program;

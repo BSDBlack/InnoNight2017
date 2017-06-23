@@ -5,9 +5,9 @@ package de.fhws.applab.skills.dataStructure;
  */
 public class LecturerView
 {
-  protected String firstName;
-  protected String lastName;
-  protected String title;
+  private String firstName;
+  private String lastName;
+  private String title;
 
   public String getFirstName() {
     return firstName;
