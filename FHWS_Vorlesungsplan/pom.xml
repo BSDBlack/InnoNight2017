@@ -14,13 +14,13 @@
 
     <profiles>
         <profile>
-            <id>tomcat-localhost</id>
+            <id>tomcat-apistaging</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <tomcat-server>tomcat-localhost</tomcat-server>
-                <tomcat-url>http://localhost:8080/manager/text</tomcat-url>
+                <tomcat-server>tomcat-apistaging</tomcat-server>
+                <tomcat-url>https://apistaging.fiw.fhws.de/manager/text</tomcat-url>
             </properties>
         </profile>
     </profiles>

@@ -19,7 +19,7 @@ public class SimpleHttpTest
 	@Before
 	public void startup( )
 	{
-		this.url = "http://localhost:8080/demo";
+		this.url = "https://apistaging.fiw.fhws.de/:8080/demo";
 	}
 
 	@Test
