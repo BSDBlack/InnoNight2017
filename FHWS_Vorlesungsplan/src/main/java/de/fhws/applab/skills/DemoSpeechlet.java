@@ -5,6 +5,7 @@ import com.amazon.speech.speechlet.*;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SsmlOutputSpeech;
 
+import de.fhws.applab.skills.Http.HttpHandler;
 import java.util.HashMap;
 import java.util.Map;
 
