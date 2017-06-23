@@ -7,6 +7,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import de.fhws.applab.fhws_veranstaltungsplan.Json.JsonHandler;
+import de.fhws.applab.skills.Json.JsonHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,13 @@ import java.util.List;
  */
 public class HttpHandler {
 
-  String s;
-
   public static void main(String[] args) {
     HttpHandler h = new HttpHandler();
-    h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day=27.06.2017");
+    JsonHandler jh = new JsonHandler();
+
+    String s = h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day=27.06.2017");
+    jh.getEventArray(s);
+
   }
 
   OkHttpClient client;
