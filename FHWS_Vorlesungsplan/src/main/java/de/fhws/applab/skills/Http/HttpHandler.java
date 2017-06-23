@@ -52,8 +52,9 @@ public class HttpHandler {
         if (!response.isSuccessful()) {
           throw new IOException("Unexpected code " + response);
         } else {
-          objects.add(response.body().string());
-
+          String e = response.body().string();
+          System.out.print(e);
+          objects.add(e);
         }
       }
     });
