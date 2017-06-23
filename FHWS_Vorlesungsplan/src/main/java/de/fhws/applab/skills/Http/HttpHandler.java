@@ -1,15 +1,11 @@
 package de.fhws.applab.skills.Http;
 
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import de.fhws.applab.skills.Json.JsonHandler;
-import de.fhws.applab.skills.dataStructure.Event;
+import de.fhws.applab.skills.DataStructure.Event;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

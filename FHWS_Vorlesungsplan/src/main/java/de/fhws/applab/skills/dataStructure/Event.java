@@ -1,6 +1,5 @@
-package de.fhws.applab.skills.dataStructure;
+package de.fhws.applab.skills.DataStructure;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

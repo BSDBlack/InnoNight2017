@@ -3,8 +3,7 @@ package de.fhws.applab.skills.Json;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import de.fhws.applab.skills.dataStructure.Event;
-import java.util.ArrayList;
+import de.fhws.applab.skills.DataStructure.Event;
 import java.util.List;
 
 

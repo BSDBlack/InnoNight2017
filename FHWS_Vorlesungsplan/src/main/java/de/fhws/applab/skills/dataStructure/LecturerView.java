@@ -1,4 +1,4 @@
-package de.fhws.applab.skills.dataStructure;
+package de.fhws.applab.skills.DataStructure;
 
 /**
  * Created by Florian Hohn on 23.06.2017.
