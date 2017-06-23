@@ -1,7 +1,2 @@
-<<<<<<< Updated upstream
-example.iml
-.idea/
-=======
-
-FHWS_Vorlesungsplan/\.idea/workspace\.xml
->>>>>>> Stashed changes
+FHWS_Vorlesungsplan/example.iml
+FHWS_Vorlesungsplan/.idea/
