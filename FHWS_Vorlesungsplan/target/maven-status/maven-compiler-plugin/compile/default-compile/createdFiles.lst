@@ -1,3 +1,2 @@
-helloworld/HelloWorldSpeechletRequestStreamHandler.class
-de/fhws/applab/fhws_veranstaltungsplan/Servlet.class
-helloworld/HelloWorldSpeechlet.class
+de/fhws/applab/skills/DemoServlet.class
+de/fhws/applab/skills/DemoSpeechlet.class
