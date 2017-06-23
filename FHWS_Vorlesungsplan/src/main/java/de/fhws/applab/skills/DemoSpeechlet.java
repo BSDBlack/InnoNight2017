@@ -49,7 +49,7 @@ public class DemoSpeechlet implements Speechlet
 
 	private static SpeechletResponse response(String answer) {
 
-		String theAnswer = "<tell>" + answer + "</tell>";
+		String theAnswer = "<speech>" + answer + "</speech>";
 
 		SsmlOutputSpeech speech = new SsmlOutputSpeech();
 		speech.setSsml(theAnswer);
