@@ -54,6 +54,8 @@ public class DemoSpeechlet implements Speechlet {
                 return getIntroduction();
             case "GetEventsToday":
                 return getEventsTodayResponse();
+            case "GetLectureDescription":
+                return getLectureDescription(intent.getSlot("vorlesung").getValue());
             case "GetEventsTodayByLecturer":
                 return getEventsTodayByLecturerResponse(intent.getSlot("dozent").getValue());
             case "GetEventsTodayByProgram":
@@ -127,12 +129,19 @@ public class DemoSpeechlet implements Speechlet {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String dateString = simpleDateFormat.format(date);
 
+        dateString = "27.06.2017";
         RequestHandler rh = new RequestHandler();
         for (Event e : rh.requestEventListByDate(dateString)) {
             speechText += e.getName() + " " + e.getRoomsView().get(0).getRoom() + " ";
         }
 
         return response(speechText.replace('&', 'u'));
+    }
+
+    private SpeechletResponse getLectureDescription(String lecture) {
+        String speechText = Constants.map.get(lecture);
+
+        return response(speechText);
     }
 
     private SpeechletResponse getEventsTodayByLecturerResponse(String dozent) {
@@ -142,9 +151,10 @@ public class DemoSpeechlet implements Speechlet {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String dateString = simpleDateFormat.format(date);
 
+        dateString = "27.06.2017";
         RequestHandler rh = new RequestHandler();
         for (Event e : rh.requestEventListByDateAndLecturer(dateString, dozent)) {
-            speechText += e.getName() + " " + e.getRoomsView().get(0).getRoom() + " ";
+            speechText += e.getName() + " ";
         }
 
         return response(speechText.replace('&', 'u'));
@@ -157,12 +167,13 @@ public class DemoSpeechlet implements Speechlet {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         String dateString = simpleDateFormat.format(date);
 
+        dateString = "27.06.2017";
         RequestHandler rh = new RequestHandler();
         for (Event e : rh.requestEventListByDateAndProgram(dateString, program)) {
-            speechText += e.getName() + " " + e.getRoomsView().get(0).getRoom() + " ";
+            speechText += e.getName() + " ";
         }
 
-        return response(speechText);
+        return response(speechText.replace('&', 'u'));
     }
 
 }
