@@ -11,6 +11,7 @@ public class Constants {
   static{
       map.put("informationsmanagement", "Managen von Informationen");
       map.put("datenkommunikation", "Kommunikation von Daten");
+      map.put("datenbanken", "Verwalten von Daten");
   }
 
 }
