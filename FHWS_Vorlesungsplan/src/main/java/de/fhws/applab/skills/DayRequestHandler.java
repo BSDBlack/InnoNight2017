@@ -18,7 +18,7 @@ public class DayRequestHandler {
     HttpHandler h = new HttpHandler();
     JsonHandler jh = new JsonHandler();
 
-    String s = h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day="+date);
+    String s = h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day=27.06.2017");
     return jh.getEventArray(s);
   }
 
