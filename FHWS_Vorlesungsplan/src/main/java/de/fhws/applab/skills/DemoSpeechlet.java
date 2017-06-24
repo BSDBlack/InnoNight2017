@@ -9,116 +9,160 @@ import com.amazon.speech.ui.SsmlOutputSpeech;
 
 import de.fhws.applab.skills.DataStructure.Event;
 import de.fhws.applab.skills.Http.HttpHandler;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Created by braunpet on 02.06.17.
  */
-public class DemoSpeechlet implements Speechlet
-{
-	private static final Logger log = LoggerFactory.getLogger(DemoSpeechlet.class);
+public class DemoSpeechlet implements Speechlet {
+    private static final Logger log = LoggerFactory.getLogger(DemoSpeechlet.class);
 
-	@Override
-	public void onSessionStarted(final SessionStartedRequest request, final Session session)
-		throws SpeechletException
-	{
-	}
+    @Override
+    public void onSessionStarted(final SessionStartedRequest request, final Session session)
+            throws SpeechletException {
+    }
 
-	@Override
-	public SpeechletResponse onLaunch(final LaunchRequest request, final Session session)
-		throws SpeechletException {
-		System.out.println("Launch" );
-		return response( "Herzlich Willkommen" );
-	}
+    @Override
+    public SpeechletResponse onLaunch(final LaunchRequest request, final Session session)
+            throws SpeechletException {
+            System.out.println("Launch");
+        return responseAsk("Möchtest du eine Einführung?");
+    }
 
-	@Override
-	public SpeechletResponse onIntent(final IntentRequest request, final Session session)
-		/*throws SpeechletException {
+    @Override
+    public SpeechletResponse onIntent(final IntentRequest request, final Session session)
+            throws SpeechletException {
 
-		Intent intent = request.getIntent();
-		String intentName = (intent != null) ? intent.getName() : null;
+            log.info("onIntent requestId={}, sessionId={}", request.getRequestId(),
+                    session.getSessionId());
 
-		System.out.println("Intent: " + intentName );
+            Intent intent = request.getIntent();
+            String intentName = (intent != null) ? intent.getName() : "keiner-vergeben";
 
-		SpeechletResponse theResponse = response("Hello");
+        switch(intentName)
+        {
+            case "GetIntroduction":
+                return getIntroduction();
+            case "GetEventsToday":
+                return getEventsTodayResponse();
+            case "GetEventsTodayByLecturer":
+                return getEventsTodayByLecturerResponse(intent.getSlot("dozent").getValue());
+            case "GetEventsTodayByProgram":
+                return getEventsByDateAndProgram(intent.getSlot("program").getValue());
+            default:
+                return responseAsk("Bitte wiederholen");
+        }
 
-		return theResponse;*/
-			throws SpeechletException {
-		log.info("onIntent requestId={}, sessionId={}", request.getRequestId(),
-				session.getSessionId());
+    }
 
-		Intent intent = request.getIntent();
-		String intentName = (intent != null) ? intent.getName() : null;
+    @Override
+    public void onSessionEnded(final SessionEndedRequest request, final Session session)
+            throws SpeechletException {
+    }
 
-		if ("GetEventsToday".equals(intentName)) {
-			return getEventsTodayResponse();
-		} else {
-			throw new SpeechletException("Invalid Intent");
-		}
-	}
+    private SpeechletResponse responseAsk(String answer) {
 
-	@Override
-	public void onSessionEnded(final SessionEndedRequest request, final Session session)
-		throws SpeechletException {
-	}
+        String theAnswer = "<speak>" + answer + "</speak>";
 
-	private static SpeechletResponse response(String answer) {
+        SsmlOutputSpeech speech = new SsmlOutputSpeech();
+        speech.setSsml(theAnswer);
 
-		String theAnswer = "<speak>" + answer + "</speak>";
+        SsmlOutputSpeech repromtText = new SsmlOutputSpeech();
+        repromtText.setSsml("<speak>Please wait.</speak>");
 
-		SsmlOutputSpeech speech = new SsmlOutputSpeech();
-		speech.setSsml(theAnswer);
+        Reprompt reprompt = new Reprompt();
+        reprompt.setOutputSpeech(repromtText);
 
-		SsmlOutputSpeech repromtText = new SsmlOutputSpeech();
-		repromtText.setSsml( "<speak>Please wait.</speak>" );
+        return SpeechletResponse.newAskResponse(speech, reprompt);
+    }
 
-		Reprompt reprompt = new Reprompt();
-		reprompt.setOutputSpeech( repromtText );
+    private static SpeechletResponse response(String answer) {
 
-		return SpeechletResponse.newTellResponse(speech);
-	}
+        String theAnswer = "<speak>" + answer + "</speak>";
 
-	/**
-	 * Creates a {@code SpeechletResponse} for the hello intent.
-	 *
-	 * @return SpeechletResponse spoken and visual response for the given intent
-	 */
-	private static SpeechletResponse responseFinal(String answer) {
-		String theAnswer = "<speak>" + answer + "</speak>";
+        SsmlOutputSpeech speech = new SsmlOutputSpeech();
+        speech.setSsml(theAnswer);
 
-		SsmlOutputSpeech speech = new SsmlOutputSpeech();
-		speech.setSsml(theAnswer);
+        SsmlOutputSpeech repromtText = new SsmlOutputSpeech();
+        repromtText.setSsml("<speak>Please wait.</speak>");
 
-		return SpeechletResponse.newTellResponse(speech);
-	}
+        Reprompt reprompt = new Reprompt();
+        reprompt.setOutputSpeech(repromtText);
 
-	private SpeechletResponse getEventsTodayResponse() {
-		String speechText = new String();
+        return SpeechletResponse.newTellResponse(speech);
+    }
 
-		RequestHandler rh = new RequestHandler();
-		for (Event e: rh.requestEventListByDate("24.06.2017")
-		) {
-			speechText += e.getName() +" " + e.getRoomsView().get(0).getRoom() + " ";
-		}
+    /**
+     * Creates a {@code SpeechletResponse} for the hello intent.
+     *
+     * @return SpeechletResponse spoken and visual response for the given intent
+     */
+    private static SpeechletResponse responseFinal(String answer) {
+        String theAnswer = "<speak>" + answer + "</speak>";
 
+        SsmlOutputSpeech speech = new SsmlOutputSpeech();
+        speech.setSsml(theAnswer);
 
-		// Create the Simple card content.
-		SimpleCard card = new SimpleCard();
-		card.setTitle("HelloWorld");
-		card.setContent(speechText);
+        return SpeechletResponse.newTellResponse(speech);
+    }
 
-		// Create the plain text output.
-		PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-		speech.setText(speechText);
+    private SpeechletResponse getIntroduction() {
+        return response("Wenn du die heutigen Vorlesungen hören möchtest, sag 'Vorlesungen heute'." +
+                "Wenn du die heutigen Vorlesungen bei einem bestimmten Dozenten hören möchtest, sag" +
+                "'Welche Vorlesungen finden heute bei Dozentname statt.");
+    }
 
-		// Create reprompt
-		Reprompt reprompt = new Reprompt();
-		reprompt.setOutputSpeech(speech);
+    private SpeechletResponse getEventsTodayResponse() {
+        String speechText = new String();
+        Date date = DateTime.now().toDate();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        String dateString = simpleDateFormat.format(date);
 
-		return SpeechletResponse.newAskResponse(speech, reprompt, card);
-	}
+        RequestHandler rh = new RequestHandler();
+        for (Event e : rh.requestEventListByDate(dateString)) {
+            speechText += e.getName() + " " + e.getRoomsView().get(0).getRoom() + " ";
+        }
+
+        return response(speechText.replace('&', 'u'));
+    }
+
+    private SpeechletResponse getEventsTodayByLecturerResponse(String dozent) {
+        System.out.println(dozent);
+        String speechText = new String();
+        Date date = DateTime.now().toDate();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        String dateString = simpleDateFormat.format(date);
+
+        RequestHandler rh = new RequestHandler();
+        for (Event e : rh.requestEventListByDateAndLecturer(dateString, dozent)) {
+            speechText += e.getName() + " " + e.getRoomsView().get(0).getRoom() + " ";
+        }
+
+        return response(speechText.replace('&', 'u'));
+    }
+
+    private SpeechletResponse getEventsByDateAndProgram(String program) {
+        System.out.println(program);
+        String speechText = new String();
+        Date date = DateTime.now().toDate();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        String dateString = simpleDateFormat.format(date);
+
+        RequestHandler rh = new RequestHandler();
+        for (Event e : rh.requestEventListByDateAndProgram(dateString, program)) {
+            speechText += e.getName() + " " + e.getRoomsView().get(0).getRoom() + " ";
+        }
+
+        return response(speechText);
+    }
 
 }
