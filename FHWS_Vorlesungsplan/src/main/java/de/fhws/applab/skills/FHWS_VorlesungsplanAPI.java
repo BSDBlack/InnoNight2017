@@ -3,7 +3,7 @@ package de.fhws.applab.skills;
 import com.amazon.speech.speechlet.LaunchRequest;
 import com.amazon.speech.speechlet.Session;
 import com.amazon.speech.speechlet.SpeechletResponse;
-import de.fhws.applab.skills.dataStructure.VPSessionBean;
+import de.fhws.applab.skills.DataStructure.VPSessionBean;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletResponse;
