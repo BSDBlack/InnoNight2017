@@ -38,10 +38,26 @@ public class RequestHandler {
     return jh.getEventArray(s).stream().filter(x -> x.getName().equals(lecture)).collect(Collectors.toList());
   }
 
+  public List<Event> requestEventListByDateAndSemester(String date, int semester){
+    String s = h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day="+date);
+    return jh.getEventArray(s).stream().filter(x -> x.getStudentsView().get(0).getSemester() == semester).collect(Collectors.toList());
+  }
+
+  public List<Event> requestEventListByDateAndProgram(String date, String program){
+    String s = h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day="+date);
+    return jh.getEventArray(s).stream().filter(x -> x.getStudentsView().get(0).getProgram().equals(program)).collect(Collectors.toList());
+  }
+
+  public List<Event> requestEventListByDateAndProgramAndSemester(String date, String program, int semester){
+    return requestEventListByDateAndSemester(date, semester).stream().filter(x -> x.getStudentsView().get(0).getProgram().equals(program)).collect(Collectors.toList());
+  }
+
 
   public static void main(String[] args){
     RequestHandler h = new RequestHandler();
-    List<Event> e = h.requestEventListByDateAndLecturer("24.06.2017", "Blaschka");
+    //List<Event> e = h.requestEventListByDateAndLecturer("24.06.2017", "Blaschka");
+    List<Event> e = h.requestEventListByDate("24.06.2017");
+
     System.out.print(e);
 
   }
