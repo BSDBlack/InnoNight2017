@@ -22,4 +22,11 @@ public class DayRequestHandler {
     return jh.getEventArray(s);
   }
 
+  public static void main(String[] args){
+    DayRequestHandler h = new DayRequestHandler();
+    List<Event> e = h.requestEventList("24.06.2017");
+    System.out.print(e);
+
+  }
+
 }
