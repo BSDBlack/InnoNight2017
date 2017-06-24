@@ -35,7 +35,7 @@ public class RequestHandler {
 
   public List<Event> requestEventListByDateAndLecture(String date, String lecture){
     String s = h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day="+date);
-    return jh.getEventArray(s).stream().filter(x -> x.getName().equalsIgnoreCase(lecture)).collect(Collectors.toList());
+    return jh.getEventArray(s).stream().filter(x -> x.getName().toLowerCase().contains(lecture.toLowerCase())).collect(Collectors.toList());
   }
 
   public List<Event> requestEventListByDateAndSemester(String date, int semester){

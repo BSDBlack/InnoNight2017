@@ -144,6 +144,13 @@ public class DemoSpeechlet implements Speechlet {
         return response(speechText);
     }
 
+    private SpeechletResponse getLectureRoom(String lecture){
+        RequestHandler rh = new RequestHandler();
+        Event e = rh.requestEventListByDateAndLecture("27.06.2017", lecture).get(0);
+
+        return response("Vorlesung findet im Raum " + e.getRoomsView().get(0).getRoom());
+    }
+
     private SpeechletResponse getEventsTodayByLecturerResponse(String dozent) {
         System.out.println(dozent);
         String speechText = new String();
