@@ -54,6 +54,8 @@ public class DemoSpeechlet implements Speechlet {
                 return getIntroduction();
             case "GetEventsToday":
                 return getEventsTodayResponse();
+            case "GetRoomByLecture":
+                return getLectureRoom(intent.getSlot("vorlesung").getValue());
             case "GetLectureDescription":
                 return getLectureDescription(intent.getSlot("vorlesung").getValue());
             case "GetEventsTodayByLecturer":
