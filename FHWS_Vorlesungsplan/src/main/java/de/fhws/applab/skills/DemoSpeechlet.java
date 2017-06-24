@@ -132,7 +132,7 @@ public class DemoSpeechlet implements Speechlet {
         dateString = "27.06.2017";
         RequestHandler rh = new RequestHandler();
         for (Event e : rh.requestEventListByDate(dateString)) {
-            speechText += e.getName() + " ";
+            speechText += e.getName() + ",-;";
         }
 
         return response(speechText.replace('&', 'u'));
@@ -154,7 +154,7 @@ public class DemoSpeechlet implements Speechlet {
         dateString = "27.06.2017";
         RequestHandler rh = new RequestHandler();
         for (Event e : rh.requestEventListByDateAndLecturer(dateString, dozent)) {
-            speechText += e.getName() + " ";
+            speechText += e.getName() + ",-;";
         }
 
         return response(speechText.replace('&', 'u'));
@@ -170,10 +170,10 @@ public class DemoSpeechlet implements Speechlet {
         dateString = "27.06.2017";
         RequestHandler rh = new RequestHandler();
         for (Event e : rh.requestEventListByDateAndProgram(dateString, program)) {
-            speechText += e.getName() + " ";
+            speechText += e.getName() + ",-;";
         }
 
-        return response(speechText.replace('&', 'u'));
+        return response(speechText);
     }
 
 }
