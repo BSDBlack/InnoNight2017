@@ -9,7 +9,8 @@ public class Constants {
 
   public static HashMap<String, String> map = new HashMap<>();
   static{
-
+      map.put("informationsmanagement", "Managen von Informationen");
+      map.put("datenkommunikation", "Kommunikation von Daten");
   }
 
 }
