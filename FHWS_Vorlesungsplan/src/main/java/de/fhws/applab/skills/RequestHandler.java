@@ -25,17 +25,17 @@ public class RequestHandler {
 
   public List<Event> requestEventListByDateAndLecturer(String date, String lecturer){
     String s = h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day="+date);
-    return jh.getEventArray(s).stream().filter(x -> x.getLecturerView().size() > 0 && x.getLecturerView().get(0).getLastName().equals(lecturer)).collect(Collectors.toList());
+    return jh.getEventArray(s).stream().filter(x -> x.getLecturerView().size() > 0 && x.getLecturerView().get(0).getLastName().equalsIgnoreCase(lecturer)).collect(Collectors.toList());
   }
 
   public List<Event> requestEventListByDateAndRoom(String date, String room){
     String s = h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day="+date);
-    return jh.getEventArray(s).stream().filter(x -> x.getRoomsView().size() > 0 && x.getRoomsView().get(0).getRoom().equals(room)).collect(Collectors.toList());
+    return jh.getEventArray(s).stream().filter(x -> x.getRoomsView().size() > 0 && x.getRoomsView().get(0).getRoom().equalsIgnoreCase(room)).collect(Collectors.toList());
   }
 
   public List<Event> requestEventListByDateAndLecture(String date, String lecture){
     String s = h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day="+date);
-    return jh.getEventArray(s).stream().filter(x -> x.getName().equals(lecture)).collect(Collectors.toList());
+    return jh.getEventArray(s).stream().filter(x -> x.getName().equalsIgnoreCase(lecture)).collect(Collectors.toList());
   }
 
   public List<Event> requestEventListByDateAndSemester(String date, int semester){
@@ -45,11 +45,11 @@ public class RequestHandler {
 
   public List<Event> requestEventListByDateAndProgram(String date, String program){
     String s = h.pullJsonStringFromHttp("https://apistaging.fiw.fhws.de/mo/api/events?day="+date);
-    return jh.getEventArray(s).stream().filter(x -> x.getStudentsView().get(0).getProgram().equals(program)).collect(Collectors.toList());
+    return jh.getEventArray(s).stream().filter(x -> x.getStudentsView().get(0).getProgram().equalsIgnoreCase(program)).collect(Collectors.toList());
   }
 
   public List<Event> requestEventListByDateAndProgramAndSemester(String date, String program, int semester){
-    return requestEventListByDateAndSemester(date, semester).stream().filter(x -> x.getStudentsView().get(0).getProgram().equals(program)).collect(Collectors.toList());
+    return requestEventListByDateAndSemester(date, semester).stream().filter(x -> x.getStudentsView().get(0).getProgram().equalsIgnoreCase(program)).collect(Collectors.toList());
   }
 
 
