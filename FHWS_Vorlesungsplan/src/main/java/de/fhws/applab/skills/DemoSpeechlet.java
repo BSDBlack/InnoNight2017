@@ -132,7 +132,7 @@ public class DemoSpeechlet implements Speechlet {
         dateString = "27.06.2017";
         RequestHandler rh = new RequestHandler();
         for (Event e : rh.requestEventListByDate(dateString)) {
-            speechText += e.getName() + " " + e.getRoomsView().get(0).getRoom() + " ";
+            speechText += e.getName() + " ";
         }
 
         return response(speechText.replace('&', 'u'));
